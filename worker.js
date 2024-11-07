@@ -73,14 +73,14 @@ async function onMessage(message) {
 
 async function notifyAdmin(message) {
   const { id: userId, username, first_name: firstName } = message.from;
-  const mention = username ? `[@${username}](tg://user?id=${userId})` : `[${firstName}](tg://user?id=${userId})`;
-  const userInfo = `*New User Started the Bot*\n\n*Name:* ${firstName}\n*ID:* ${userId}\n*Username:* ${username || "No username"}\n*Mention:* ${mention}`;
+  const mention = username ? `[@${firstname}](tg://user?id=${userId})` : `[${firstName}](tg://user?id=${userId})`;
+  const userInfo = `*New User Started the Bot*\n\n*Name:* ${firstName}\n*ID:* ${userId}\n*Username:* @${username || "No username"}\n*Mention:* ${mention}`;
 
   await sendMarkdown(ADMIN_CHAT_ID, userInfo);
 }
 
 async function sendStartMessage(chatId) {
-  const startMessage = `*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮, this bot is powered by advanced AI to provide intelligent responses`;
+  const startMessage = `*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮 this bot is powered by advanced AI to provide intelligent responses`;
 
   try {
     await sendImage(chatId, START_IMAGE_URL, startMessage);
