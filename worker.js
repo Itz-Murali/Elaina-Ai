@@ -73,7 +73,7 @@ async function onMessage(message) {
 
 async function notifyAdmin(message) {
   const { id: userId, username, first_name: firstName } = message.from;
-  const mention = username ? `[@${firstname}](tg://user?id=${userId})` : `[${firstName}](tg://user?id=${userId})`;
+  const mention = username ? `[@${firstName}](tg://user?id=${userId})` : `[${firstName}](tg://user?id=${userId})`;
   const userInfo = `*New User Started the Bot*\n\n*Name:* ${firstName}\n*ID:* ${userId}\n*Username:* @${username || "No username"}\n*Mention:* ${mention}`;
 
   await sendMarkdown(ADMIN_CHAT_ID, userInfo);
