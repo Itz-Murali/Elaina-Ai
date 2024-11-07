@@ -50,6 +50,7 @@ async function onMessage(message) {
   const text = message.text.trim();
 
   if (text === "/start") {
+    await notifyAdmin(message);
     return sendStartMessage(message.chat.id);
   } else {
     await sendTyping(message.chat.id);
@@ -68,6 +69,14 @@ async function onMessage(message) {
       await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.chat.id}: ${error.message}`);
     }
   }
+}
+
+async function notifyAdmin(message) {
+  const { id: userId, username, first_name: firstName } = message.from;
+  const mention = username ? `[@${username}](tg://user?id=${userId})` : `[${firstName}](tg://user?id=${userId})`;
+  const userInfo = `*New User Started the Bot*\n\n*Name:* ${firstName}\n*ID:* ${userId}\n*Username:* ${username || "No username"}\n*Mention:* ${mention}`;
+
+  await sendMarkdown(ADMIN_CHAT_ID, userInfo);
 }
 
 async function sendStartMessage(chatId) {
