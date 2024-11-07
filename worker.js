@@ -71,7 +71,7 @@ async function onMessage(message) {
 }
 
 async function sendStartMessage(chatId) {
-  const startMessage = `🌟 Welcome to Elaina AI Bot! 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮, this bot is powered by advanced AI to provide intelligent responses.\n\nDon't hesitate to ask me anything or simply say hello! 😊\n\n*Dive into the magic of AI, right here at your fingertips!*`;
+  const startMessage = `*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮, this bot is powered by advanced AI to provide intelligent responses.\n\nDon't hesitate to ask me anything or simply say hello! 😊\n\n*Dive into the magic of AI, right here at your fingertips!*`;
 
   try {
     await sendImage(chatId, START_IMAGE_URL, startMessage);
