@@ -1,6 +1,6 @@
 name = "elaina"
 main = "worker.js"
-compatibility_date = "2024-11-07"
+compatibility_date = "2024-11-08"
 # wrangler.toml (wrangler v3.79.0^)
 [observability]
 enabled = true
