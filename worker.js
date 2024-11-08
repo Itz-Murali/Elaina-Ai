@@ -1,4 +1,4 @@
-const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // elaina bot token
+const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // elaina bot token zgsudhdu
 const CHAT_ID = null;
 const WEBHOOK = "/endpoint";
 const SECRET = "AAGFTRWCWtZPsbPNzpx54AMfwMy12a3N1No";
