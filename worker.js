@@ -69,7 +69,7 @@ async function onMessage(message) {
     } catch (error) {
       console.error("Error fetching AI response:", error);
       await sendImage(message.chat.id, ERROR_IMAGE_URL, "An error occurred. Please try again later.");
-      await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.chat.id}: ${error.message}`);
+      await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from_user.id} : ${error.message}`);
     }
   }
 }
