@@ -1,8 +1,8 @@
-const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // Updated Bot Token
+const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // elaina bot token
 const CHAT_ID = null;
 const WEBHOOK = "/endpoint";
 const SECRET = "AAGFTRWCWtZPsbPNzpx54AMfwMy12a3N1No";
-const ADMIN_CHAT_ID = "7792739542"; // MysticalDev's user ID
+const ADMIN_CHAT_ID = "7792739542"; // my user ID
 const ERROR_IMAGE_URL = "https://graph.org/file/7844ad60af6ef341bc57e-3d7702ba0a1b96e84d.jpg"; // Image for error messages
 const START_IMAGE_URL = "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg"; // Image for start message
 
@@ -82,7 +82,7 @@ async function notifyAdmin(message) {
 async function sendStartMessage(chatId) {
   const startMessage = `*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮, this bot is powered by advanced AI to provide intelligent responses`;
 
-  // Define the inline keyboard
+  
   const inlineKeyboard = {
     inline_keyboard: [
       [
@@ -93,7 +93,7 @@ async function sendStartMessage(chatId) {
   };
 
   try {
-    // Send the start message with the inline keyboard
+    
     await sendImageWithKeyboard(chatId, START_IMAGE_URL, startMessage, inlineKeyboard);
   } catch (error) {
     console.error("Error sending start message:", error);
