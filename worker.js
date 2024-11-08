@@ -51,6 +51,13 @@ async function onMessage(message) {
   if (CHAT_ID && message.chat.id !== CHAT_ID) return false;
 
   const text = message.text.trim();
+  const friendlyResponses = [
+    "I'm having a little trouble understanding. Could you please rephrase or try again?",
+    "Oops, I missed that! Could you please clarify?",
+    "It seems I didn't catch that. Mind sending it again?",
+    "Hmm, I didn’t quite get that. Could you provide more details?",
+    "I’m here to help! Could you please repeat your message?"
+  ];
 
   if (text === "/start") {
     await notifyAdmin(message);
@@ -68,8 +75,19 @@ async function onMessage(message) {
       return sendMarkdown(message.chat.id, aiResponse);
     } catch (error) {
       console.error("Error fetching AI response:", error);
-      await sendImage(message.chat.id, ERROR_IMAGE_URL, "An error occurred. Please try again later.");
-      await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from_user.id} : ${error.message}`);
+
+
+      if (error.message.includes("Time out")) {
+        
+        const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
+        await sendMarkdown(message.chat.id, randomResponse);
+
+        await sendMarkdown(ADMIN_CHAT_ID, `Timeout Error for user ${message.from.id}: ${error.message}`);
+      } else {
+     
+        await sendImage(message.chat.id, ERROR_IMAGE_URL, "An error occurred. Please try again later.");
+        await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${error.message}`);
+      }
     }
   }
 }
