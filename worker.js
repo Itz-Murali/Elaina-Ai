@@ -80,16 +80,43 @@ async function notifyAdmin(message) {
 }
 
 async function sendStartMessage(chatId) {
-  const startMessage = `*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮 this bot is powered by advanced AI to provide intelligent responses`;
+  const startMessage = `*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮, this bot is powered by advanced AI to provide intelligent responses`;
+
+  // Define the inline keyboard
+  const inlineKeyboard = {
+    inline_keyboard: [
+      [
+        { text: "Support", url: "https://t.me/Mysticdevs" },
+        { text: "Owner", url: "https://t.me/mysticaldev" }
+      ]
+    ]
+  };
 
   try {
-    await sendImage(chatId, START_IMAGE_URL, startMessage);
+    // Send the start message with the inline keyboard
+    await sendImageWithKeyboard(chatId, START_IMAGE_URL, startMessage, inlineKeyboard);
   } catch (error) {
     console.error("Error sending start message:", error);
     await sendImage(chatId, ERROR_IMAGE_URL, "An error occurred while sending the start message. Please try again later.");
     await sendMarkdown(ADMIN_CHAT_ID, `Error in sendStartMessage: ${error.message}`);
   }
 }
+
+async function sendImageWithKeyboard(chatId, imageUrl, caption, keyboard) {
+  return (
+    await fetch(apiUrl("sendPhoto"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        photo: imageUrl,
+        caption: caption,
+        parse_mode: "Markdown",
+        reply_markup: keyboard
+      })
+    })
+  ).json();
+  }
 
 async function sendMarkdown(chatId, text) {
   return (
