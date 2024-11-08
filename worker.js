@@ -18,7 +18,7 @@ addEventListener("fetch", (event) => {
     event.respondWith(new Response(null, { status: 404 }));
   }
 });
-
+// Test
 function handleWebhook(event) {
   if (event.request.headers.get("X-Telegram-Bot-Api-Secret-Token") !== SECRET) {
     return new Response("Unauthorized", { status: 403 });
