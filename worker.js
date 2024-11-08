@@ -19,18 +19,21 @@ addEventListener("fetch", (event) => {
   }
 });
 // Test
-function handleWebhook(event) {
+async function handleWebhook(event) {
   if (event.request.headers.get("X-Telegram-Bot-Api-Secret-Token") !== SECRET) {
     return new Response("Unauthorized", { status: 403 });
   }
 
-  const handler = async function () {
-    const update = await event.request.json();
+  try {
+    const update = await event.request.json();  
     await onUpdate(update);
-  };
-  event.waitUntil(handler());
-  return new Response("Bot is active");
+    return new Response("Bot is active"); 
+  } catch (error) {
+    console.error("Error handling webhook:", error);
+    return new Response("Error processing request", { status: 500 });
+  }
 }
+
 
 async function onUpdate(update) {
   if ("message" in update) {
