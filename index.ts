@@ -136,24 +136,9 @@ async function handleWebhook(event: FetchEvent): Promise<Response> {
     return new Response("Error processing request", { status: 500 });
   }
 }
-
-async function onUpdate(update: any): Promise<void> {
-  if ("message" in update) {
-    const message = update.message;
-    if (!message.text) {
-      await sendImage(message.chat.id, ERROR_IMAGE_URL, "I can only respond to text messages.");
-      return;
-    }
-
-    await onMessage(message);
-  }
-}
-
 async function onMessage(message: any): Promise<void | boolean> {
-  if (CHAT_ID && message.chat.id !== CHAT_ID) {
- 
-    return;
-  }
+  if (CHAT_ID && message.chat.id !== CHAT_ID) return false;
+
   const text = message.text.trim();
   const friendlyResponses = [
     "I'm having a little trouble understanding. Could you please rephrase or try again?",
@@ -172,7 +157,8 @@ async function onMessage(message: any): Promise<void | boolean> {
     "Apologies! Could you please explain that in a different way?",
     "Let me give it another shot—could you repeat or add a bit more?",
     "I'm here to listen. Could you reword that for me?"
-];
+  ];
+
   if (text === "/pfp" || text === "/animepfp") {
     await sendImageWithKeyboard(
       message.chat.id,
@@ -206,32 +192,32 @@ async function onMessage(message: any): Promise<void | boolean> {
         ]
       }
     );
-  }
-}
-
-  if (text === "/start") {
+  } else if (text === "/start") {
     await notifyAdmin(message);
     await sendStartMessage(message.chat.id);
-      return;
   } else {
     await sendTyping(message.chat.id);
     try {
-    const userMessage = encodeURIComponent(text);
-    const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
-    
-    if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    
-    const responseData = await response.json();
-    const aiResponse = responseData.cnt;
+      const userMessage = encodeURIComponent(text);
+      const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
+      if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
 
-    await sendMarkdown(message.chat.id, aiResponse);
-  } catch (error) {
-    console.error("Error fetching AI response:", error);
-    const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
-    await sendMarkdown(message.chat.id, randomResponse);
-    await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${error.message}`);
+      const responseData = await response.json();
+      const aiResponse = responseData.cnt;
+
+      return sendMarkdown(message.chat.id, aiResponse);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+      const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
+      await sendMarkdown(message.chat.id, randomResponse);
+      if (ADMIN_CHAT_ID) {
+        await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${error.message}`);
+      }
+    }
   }
 }
+
+
 
 
 async function notifyAdmin(message: any): Promise<void> {
