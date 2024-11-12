@@ -1,3 +1,5 @@
+import { Zero, MARIN, RANDOMING } from "./images";
+
 const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // Elaina bot token
 const CHAT_ID: string | null = null;
 const WEBHOOK = "/endpoint";
