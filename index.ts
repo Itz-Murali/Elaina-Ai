@@ -150,24 +150,51 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery) {
     const backButton: InlineKeyboard = {
       inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
     };
-    await editMessageText(chatId, messageId, helpText, backButton);
+    try {
+      await editMessageText(chatId, messageId, helpText, backButton);
+    } catch (error) {
+      console.error("Error editing message text for help:", error);
+    }
   } else if (data === "back") {
-    await sendStartMessage(chatId);
+    try {
+      await sendStartMessage(chatId);
+    } catch (error) {
+      console.error("Error sending start message on back:", error);
+    }
   }
 }
 
+
 async function editMessageText(chatId: string, messageId: number, text: string, keyboard?: InlineKeyboard) {
-  await fetch(apiUrl("editMessageText"), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      message_id: messageId,
-      text,
-      parse_mode: "Markdown",
-      reply_markup: keyboard
-    })
-  });
+  try {
+    const response = await fetch(apiUrl("editMessageText"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        message_id: messageId,
+        text,
+        parse_mode: "Markdown",
+        reply_markup: keyboard
+      })
+    });
+
+    const result = await response.json();
+    if (!result.ok) {
+      
+      await sendMarkdown(
+        ADMIN_CHAT_ID,
+        `*Error Editing Message*\n\n*Chat ID:* ${chatId}\n*Message ID:* ${messageId}\n*Error:* ${result.description}`
+      );
+    }
+  } catch (error) {
+
+    console.error("Error in editMessageText:", error);
+    await sendMarkdown(
+      ADMIN_CHAT_ID,
+      `*Error Editing Message*\n\n*Chat ID:* ${chatId}\n*Message ID:* ${messageId}\n*Error:* ${error.message}`
+    );
+  }
 }
 
 async function sendImageWithKeyboard(chatId: string, imageUrl: string, caption: string, keyboard: any): Promise<any> {
