@@ -99,17 +99,34 @@ async function notifyAdmin(message: any): Promise<void> {
   await sendMarkdown(ADMIN_CHAT_ID, userInfo);
 }
 
-async function sendStartMessage(chatId: string): Promise<void> {
-  const startMessage = `*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮, this bot is powered by advanced AI to provide intelligent responses`;
+async function sendStartMessage(chatId: string) {
+  const startMessages = [
+    "*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮",
+    "*Hello and Welcome!* 🎉\n\nElaina AI Bot is here to add magic to your chats and make every conversation special. Reach out anytime! ✨",
+    "*Greetings from Elaina AI!* 🤖✨\n\nYour personal AI companion is ready to help you with your queries and brighten your day! Created with passion by @MysticalDev 🔮",
+    "*Hey there! Elaina AI Bot at your service!* 🌠\n\nI’m here to assist, inspire, and make your day better. Let’s make every interaction memorable! Powered by @MysticalDev 💫"
+  ];
 
-  const inlineKeyboard = {
+  const startImages = [
+    "https://graph.org/file/7ac1c4be1ed4b2d2bfc8f-eff3552cdd5f4f2068.jpg",
+    "https://graph.org/file/94897b71de655097afa76-a59b6d229ed1aefcb8.jpg"
+  ];
+
+  // finnally done 😅
+  const randomMessage = startMessages[Math.floor(Math.random() * startMessages.length)];
+  const randomImage = startImages[Math.floor(Math.random() * startImages.length)];
+
+  const inlineKeyboard: InlineKeyboard = {
     inline_keyboard: [
-      [{ text: "Support", url: "https://t.me/Mysticdevs" }, { text: "Owner", url: "https://t.me/mysticaldev" }]
+      [
+        { text: "Support", url: "https://t.me/Mysticdevs" },
+        { text: "Owner", url: "https://t.me/mysticaldev" }
+      ]
     ]
   };
 
   try {
-    await sendImageWithKeyboard(chatId, START_IMAGE_URL, startMessage, inlineKeyboard);
+    await sendImageWithKeyboard(chatId, randomImage, randomMessage, inlineKeyboard);
   } catch (error) {
     console.error("Error sending start message:", error);
     await sendImage(chatId, ERROR_IMAGE_URL, "An error occurred while sending the start message. Please try again later.");
