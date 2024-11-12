@@ -150,8 +150,10 @@ async function onUpdate(update: any): Promise<void> {
 }
 
 async function onMessage(message: any): Promise<void | boolean> {
-  if (CHAT_ID && message.chat.id !== CHAT_ID) return false;
-
+  if (CHAT_ID && message.chat.id !== CHAT_ID) {
+ 
+    return;
+  }
   const text = message.text.trim();
   const friendlyResponses = [
     "I'm having a little trouble understanding. Could you please rephrase or try again?",
@@ -214,21 +216,22 @@ async function onMessage(message: any): Promise<void | boolean> {
   } else {
     await sendTyping(message.chat.id);
     try {
-      const userMessage = encodeURIComponent(text);
-      const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
-      if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
+    const userMessage = encodeURIComponent(text);
+    const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
+    
+    if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
+    
+    const responseData = await response.json();
+    const aiResponse = responseData.cnt;
 
-      const responseData = await response.json();
-      const aiResponse = responseData.cnt;
-
-      return sendMarkdown(message.chat.id, aiResponse);
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
-      const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
-      await sendMarkdown(message.chat.id, randomResponse);
-      await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${error.message}`);
-    }
+    await sendMarkdown(message.chat.id, aiResponse);
+  } catch (error) {
+    console.error("Error fetching AI response:", error);
+    const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
+    await sendMarkdown(message.chat.id, randomResponse);
+    await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${error.message}`);
   }
+}
 
 
 async function notifyAdmin(message: any): Promise<void> {
