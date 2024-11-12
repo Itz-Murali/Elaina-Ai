@@ -109,7 +109,8 @@ async function sendStartMessage(chatId: string) {
 
   const startImages = [
     "https://graph.org/file/7ac1c4be1ed4b2d2bfc8f-eff3552cdd5f4f2068.jpg",
-    "https://graph.org/file/94897b71de655097afa76-a59b6d229ed1aefcb8.jpg"
+    "https://graph.org/file/94897b71de655097afa76-a59b6d229ed1aefcb8.jpg",
+    "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg"
   ];
 
   // finnally done 😅
