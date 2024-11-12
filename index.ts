@@ -351,6 +351,7 @@ async function fetchImage(url: string): Promise<string | null> {
     return data.url || data.results[0].url || null;
   } catch (error) {
     console.error("Error fetching image:", error);
+    await sendMarkdown(ADMIN_CHAT_ID, `Error in Image Gen: ${error.message} \n${url}`);
     return null;
   }
 }
