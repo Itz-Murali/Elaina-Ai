@@ -150,19 +150,19 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery) {
     const backButton: InlineKeyboard = {
       inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
     };
-    try {
+
+    if (message.text) {
+      
       await editMessageText(chatId, messageId, helpText, backButton);
-    } catch (error) {
-      console.error("Error editing message text for help:", error);
+    } else {
+
+      await sendMarkdown(chatId, helpText);
     }
   } else if (data === "back") {
-    try {
-      await sendStartMessage(chatId);
-    } catch (error) {
-      console.error("Error sending start message on back:", error);
-    }
+    await sendStartMessage(chatId);
   }
 }
+
 
 
 async function editMessageText(chatId: string, messageId: number, text: string, keyboard?: InlineKeyboard) {
@@ -179,16 +179,17 @@ async function editMessageText(chatId: string, messageId: number, text: string, 
       })
     });
 
+
     const result = await response.json();
     if (!result.ok) {
-      
+    
       await sendMarkdown(
         ADMIN_CHAT_ID,
         `*Error Editing Message*\n\n*Chat ID:* ${chatId}\n*Message ID:* ${messageId}\n*Error:* ${result.description}`
       );
     }
   } catch (error) {
-
+    
     console.error("Error in editMessageText:", error);
     await sendMarkdown(
       ADMIN_CHAT_ID,
