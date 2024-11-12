@@ -72,6 +72,42 @@ async function onMessage(message: any): Promise<void | boolean> {
     "Let me give it another shot—could you repeat or add a bit more?",
     "I'm here to listen. Could you reword that for me?"
 ];
+  if (text === "/pfp" || text === "/animepfp") {
+    await sendImageWithKeyboard(
+      message.chat.id,
+      "https://telegra.ph/file/00734ac3f3ebfe9cb264f.jpg",
+      "Choose which type of PFP you want:",
+      {
+        inline_keyboard: [
+          [
+            { text: "Zero Two", callback_data: "zerotwoo" },
+            { text: "Marin Kitagawa", callback_data: "marinkitagava" }
+          ],
+          [
+            { text: "Neko Anime [V1]", callback_data: "animev1" },
+            { text: "Neko Anime [V2]", callback_data: "animev2" }
+          ],
+          [
+            { text: "Neko Anime [V3]", callback_data: "nekov3" },
+            { text: "Neko Anime [V4]", callback_data: "nekov4" }
+          ],
+          [
+            { text: "Husbando", callback_data: "animeboyspfp" },
+            { text: "Fox Girl", callback_data: "foxgirlz" }
+          ],
+          [
+            { text: "Kitsune", callback_data: "kitsunepfp" },
+            { text: "Waifu", callback_data: "waifupfp" }
+          ],
+          [
+            { text: "Random Images", callback_data: "randomimgs" }
+          ]
+        ]
+      }
+    );
+  }
+}
+
   if (text === "/start") {
     await notifyAdmin(message);
     return sendStartMessage(message.chat.id);
@@ -138,31 +174,101 @@ async function sendStartMessage(chatId: string) {
   }
 }
 
-async function handleCallbackQuery(callbackQuery: CallbackQuery) {
+async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> {
   const { data, message } = callbackQuery;
   if (!message) return;
 
   const chatId = message.chat.id;
   const messageId = message.message_id;
+  let imageUrl: string | null = null;
 
-  if (data === "help") {
-    const helpText = "*Help Section*\n\nUse /start to begin.\nI'll add more commands here.";
-    const backButton: InlineKeyboard = {
-      inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
-    };
+  switch (data) {
+    case "help":
+      const helpText = "*Help Section*\n\nUse /start to begin.\nI'll add more commands here.";
+      const backButton: InlineKeyboardMarkup = {
+        inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
+      };
 
-    if (message.text) {
-      
-      await editMessageText(chatId, messageId, helpText, backButton);
-    } else {
+      if (message.text) {
+        await editMessageText(chatId, messageId, helpText, backButton);
+      } else {
+        await sendMarkdown(chatId, helpText);
+      }
+      break;
 
-      await sendMarkdown(chatId, helpText);
-    }
-  } else if (data === "back") {
-    await sendStartMessage(chatId);
+    case "back":
+      await sendStartMessage(chatId);
+      break;
+
+    case "animev1":
+      imageUrl = await fetchImage("https://api.waifu.pics/sfw/neko");
+      break;
+    case "animev2":
+      imageUrl = await fetchImage("https://nekos.best/api/v2/neko");
+      break;
+    case "animeboyspfp":
+      imageUrl = await fetchImage("https://nekos.best/api/v2/husbando");
+      break;
+    case "kitsunepfp":
+      imageUrl = await fetchImage("https://nekos.best/api/v2/kitsune");
+      break;
+    case "waifupfp":
+      imageUrl = await fetchImage("https://api.waifu.pics/sfw/waifu");
+      break;
+    case "foxgirlz":
+      imageUrl = "https://nekos.life/api/v2/img/fox_girl";
+      break;
+    case "nekov3":
+    case "nekov4":
+      imageUrl = await fetchImage("https://nekos.life/api/v2/img/neko");
+      break;
+    case "zerotwoo":
+      imageUrl = randomChoice(Zero);
+      break;
+    case "marinkitagava":
+      imageUrl = randomChoice(MARIN);
+      break;
+    case "randomimgs":
+      imageUrl = randomChoice(RANDOMIMG);
+      break;
+    
+    default:
+      imageUrl = ERROR_IMAGE_URL;
+  }
+
+  if (imageUrl) {
+    await sendImageWithKeyboard(
+      chatId,
+      imageUrl,
+      "Generated Image",
+      {
+        inline_keyboard: [
+          [{ text: "Generate Again", callback_data: data }],
+          [
+            { text: "Home", callback_data: "animemain" },
+            { text: "Close", callback_data: "close" }
+          ]
+        ]
+      }
+    );
   }
 }
 
+
+async function fetchImage(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.url || data.results[0].url || null;
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    return null;
+  }
+}
+
+function randomChoice(arr: string[]): string {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
 
 async function editMessageText(chatId: string, messageId: number, text: string, keyboard?: InlineKeyboard) {
@@ -198,7 +304,8 @@ async function editMessageText(chatId: string, messageId: number, text: string, 
   }
 }
 
-async function sendImageWithKeyboard(chatId: string, imageUrl: string, caption: string, keyboard: any): Promise<any> {
+async function sendImageWithKeyboard(chatId: string, imageUrl: string, caption: string, keyboard: InlineKeyboardMarkup): Promise<void> {
+
   return fetch(apiUrl("sendPhoto"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
