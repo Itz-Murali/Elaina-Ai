@@ -228,7 +228,7 @@ async function onMessage(message: any): Promise<void | boolean> {
       await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${error.message}`);
     }
   }
-}
+
 
 async function notifyAdmin(message: any): Promise<void> {
   const { id: userId, username, first_name: firstName } = message.from;
