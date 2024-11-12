@@ -136,6 +136,19 @@ async function handleWebhook(event: FetchEvent): Promise<Response> {
     return new Response("Error processing request", { status: 500 });
   }
 }
+
+async function onUpdate(update: any): Promise<void> {
+  if ("message" in update) {
+    const message = update.message;
+    if (!message.text) {
+      await sendImage(message.chat.id, ERROR_IMAGE_URL, "I can only respond to text messages.");
+      return;
+    }
+    await onMessage(message);
+  }
+}
+
+
 async function onMessage(message: any): Promise<void | boolean> {
   if (CHAT_ID && message.chat.id !== CHAT_ID) return false;
 
