@@ -176,7 +176,7 @@ async function onMessage(message: any): Promise<void | boolean> {
     await sendImageWithKeyboard(
       message.chat.id,
       "https://telegra.ph/file/00734ac3f3ebfe9cb264f.jpg",
-      "Choose which type of PFP you want:",
+      "Welcome To Elaina Pfp Store \nChoose Which Type Pfp You Wanr A Are Free ",
       {
         inline_keyboard: [
           [
@@ -188,8 +188,8 @@ async function onMessage(message: any): Promise<void | boolean> {
             { text: "Neko Anime [V2]", callback_data: "animev2" }
           ],
           [
-            { text: "Neko Anime [V3]", callback_data: "nekov3" },
-            { text: "Neko Anime [V4]", callback_data: "nekov4" }
+            
+            { text: "Neko Anime [V3]", callback_data: "nekov3" }
           ],
           [
             { text: "Husbando", callback_data: "animeboyspfp" },
@@ -260,10 +260,13 @@ async function sendStartMessage(chatId: string) {
   const inlineKeyboard: InlineKeyboard = {
     inline_keyboard: [
       [
-        { text: "Help", callback_data: "help" },
+        
         { text: "Support", url: "https://t.me/Mysticdevs" },
         { text: "Owner", url: "https://t.me/mysticaldev" }
-      ]
+      ],
+        [
+            { text: "Help", callback_data: "help" }
+        ]
     ]
   };
 
@@ -286,22 +289,9 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
 
   switch (data) {
     case "help":
-      const helpText = "*Help Section*\n\nUse /start to begin.\nI'll add more commands here.";
-      const backButton: InlineKeyboardMarkup = {
-        inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
-      };
-
-      if (message.text) {
-        await editMessageText(chatId, messageId, helpText, backButton);
-      } else {
-        await sendMarkdown(chatId, helpText);
-      }
-      break;
-
-    case "back":
-      await sendStartMessage(chatId);
-      break;
-
+      const helpText = "*Help Section*\n\nUse /start to begin.\nI'll add more commands here.";             
+      await sendMarkdown(chatId, helpText);
+      break;       
     case "animev1":
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/neko");
       break;
@@ -320,8 +310,8 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
     case "foxgirlz":
       imageUrl = "https://nekos.life/api/v2/img/fox_girl";
       break;
+    
     case "nekov3":
-    case "nekov4":
       imageUrl = await fetchImage("https://nekos.life/api/v2/img/neko");
       break;
     case "zerotwoo":
@@ -346,10 +336,7 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
       {
         inline_keyboard: [
           [{ text: "Generate Again", callback_data: data }],
-          [
-            { text: "Home", callback_data: "animemain" },
-            { text: "Close", callback_data: "close" }
-          ]
+          
         ]
       }
     );
