@@ -55,9 +55,19 @@ async function onMessage(message: any): Promise<void | boolean> {
     "Oops, I missed that! Could you please clarify?",
     "It seems I didn't catch that. Mind sending it again?",
     "Hmm, I didn’t quite get that. Could you provide more details?",
-    "I’m here to help! Could you please repeat your message?"
-  ];
-
+    "I’m here to help! Could you please repeat your message?",
+    "My circuits got a bit tangled! Could you say that one more time?",
+    "Could you rephrase? I want to make sure I get it right!",
+    "I’m here to understand. Could you help me out by clarifying?",
+    "I didn't quite get that. Could you give me a bit more info?",
+    "Let’s try that again! Could you explain it a bit differently?",
+    "Oops! I think I missed something there. Mind rephrasing?",
+    "Could you share a bit more? I want to make sure I understand.",
+    "Hmm, that didn’t come through clearly. Could you try again?",
+    "Apologies! Could you please explain that in a different way?",
+    "Let me give it another shot—could you repeat or add a bit more?",
+    "I'm here to listen. Could you reword that for me?"
+];
   if (text === "/start") {
     await notifyAdmin(message);
     return sendStartMessage(message.chat.id);
