@@ -308,7 +308,7 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/waifu");
       break;
     case "foxgirlz":
-      imageUrl = "https://nekos.life/api/v2/img/fox_girl";
+      imageUrl = await fetchImage("https://nekos.life/api/v2/img/fox_girl)";
       break;
     
     case "nekov3":
