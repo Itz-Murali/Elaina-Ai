@@ -1,7 +1,3 @@
 name = "elaina"
-main = "worker.js"
+main = "index.ts"
 compatibility_date = "2024-11-08"
-# wrangler.toml (wrangler v3.79.0^)
-[observability]
-enabled = true
-head_sampling_rate = 1
