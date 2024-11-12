@@ -1,8 +1,8 @@
-const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // elaina bot token
+const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // Elaina bot token
 const CHAT_ID: string | null = null;
 const WEBHOOK = "/endpoint";
 const SECRET = "AAGFTRWCWtZPsbPNzpx54AMfwMy12a3N1No";
-const ADMIN_CHAT_ID = "7792739542"; // admin user ID
+const ADMIN_CHAT_ID = "7792739542"; // Admin user ID
 const ERROR_IMAGE_URL = "https://graph.org/file/7844ad60af6ef341bc57e-3d7702ba0a1b96e84d.jpg";
 const START_IMAGE_URL = "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg";
 
@@ -26,7 +26,11 @@ async function handleWebhook(event: FetchEvent): Promise<Response> {
 
   try {
     const update = await event.request.json();
-    await onUpdate(update);
+    if (update.callback_query) {
+      await handleCallbackQuery(update.callback_query);
+    } else if (update.message) {
+      await onUpdate(update);
+    }
     return new Response("Bot is active");
   } catch (error) {
     console.error("Error handling webhook:", error);
@@ -106,20 +110,19 @@ async function sendStartMessage(chatId: string) {
     "*Greetings from Elaina AI!* 🤖✨\n\nYour personal AI companion is ready to help you with your queries and brighten your day! Created with passion by @MysticalDev 🔮",
     "*Hey there! Elaina AI Bot at your service!* 🌠\n\nI’m here to assist, inspire, and make your day better. Let’s make every interaction memorable! Powered by @MysticalDev 💫"
   ];
-
   const startImages = [
     "https://graph.org/file/7ac1c4be1ed4b2d2bfc8f-eff3552cdd5f4f2068.jpg",
     "https://graph.org/file/94897b71de655097afa76-a59b6d229ed1aefcb8.jpg",
     "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg"
   ];
 
-  // finnally done 😅
   const randomMessage = startMessages[Math.floor(Math.random() * startMessages.length)];
   const randomImage = startImages[Math.floor(Math.random() * startImages.length)];
 
   const inlineKeyboard: InlineKeyboard = {
     inline_keyboard: [
       [
+        { text: "Help", callback_data: "help" },
         { text: "Support", url: "https://t.me/Mysticdevs" },
         { text: "Owner", url: "https://t.me/mysticaldev" }
       ]
@@ -133,6 +136,38 @@ async function sendStartMessage(chatId: string) {
     await sendImage(chatId, ERROR_IMAGE_URL, "An error occurred while sending the start message. Please try again later.");
     await sendMarkdown(ADMIN_CHAT_ID, `Error in sendStartMessage: ${error.message}`);
   }
+}
+
+async function handleCallbackQuery(callbackQuery: CallbackQuery) {
+  const { data, message } = callbackQuery;
+  if (!message) return;
+
+  const chatId = message.chat.id;
+  const messageId = message.message_id;
+
+  if (data === "help") {
+    const helpText = "*Help Section*\n\nUse /start to begin.\nI'll add more commands here.";
+    const backButton: InlineKeyboard = {
+      inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
+    };
+    await editMessageText(chatId, messageId, helpText, backButton);
+  } else if (data === "back") {
+    await sendStartMessage(chatId);
+  }
+}
+
+async function editMessageText(chatId: string, messageId: number, text: string, keyboard?: InlineKeyboard) {
+  await fetch(apiUrl("editMessageText"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      message_id: messageId,
+      text,
+      parse_mode: "Markdown",
+      reply_markup: keyboard
+    })
+  });
 }
 
 async function sendImageWithKeyboard(chatId: string, imageUrl: string, caption: string, keyboard: any): Promise<any> {
@@ -183,7 +218,12 @@ async function unRegisterWebhook(event: FetchEvent): Promise<Response> {
   return new Response(jsonResponse.ok ? "Webhook unregistered" : JSON.stringify(jsonResponse, null, 2));
 }
 
-function apiUrl(methodName: string, params: Record<string, string> | null = null): string {
-  const query = params ? "?" + new URLSearchParams(params).toString() : "";
-  return `https://api.telegram.org/bot${TOKEN}/${methodName}${query}`;
+function apiUrl(method: string, params?: object): string {
+  const url = `https://api.telegram.org/bot${TOKEN}/${method}`;
+  if (params) {
+    const query = new URLSearchParams(params);
+    return `${url}?${query.toString()}`;
+  }
+  return url;
 }
+
