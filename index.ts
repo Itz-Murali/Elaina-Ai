@@ -209,7 +209,8 @@ async function onMessage(message: any): Promise<void | boolean> {
 
   if (text === "/start") {
     await notifyAdmin(message);
-    return sendStartMessage(message.chat.id);
+    await sendStartMessage(message.chat.id);
+      return;
   } else {
     await sendTyping(message.chat.id);
     try {
