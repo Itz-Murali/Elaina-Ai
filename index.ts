@@ -213,7 +213,6 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
     case "foxgirlz":
       imageUrl = await fetchImage("https://nekos.life/api/v2/img/fox_girl");
       break;
-    
     case "nekov3":
       imageUrl = await fetchImage("https://nekos.life/api/v2/img/neko");
       break;
@@ -250,8 +249,11 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
 async function fetchImage(url: string): Promise<string | null> {
   try {
     const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
     const data = await response.json();
-    return data.url || data.results[0].url || null;
+    return data.results?.[0]?.url || null;
   } catch (error) {
     console.error("Error fetching image:", error);
     await sendMarkdown(ADMIN_CHAT_ID, `Error in Image Gen: ${error.message} \n${url}`);
