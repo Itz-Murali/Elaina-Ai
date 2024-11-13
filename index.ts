@@ -249,13 +249,14 @@ async function fetchImage(url: string): Promise<string | null> {
 
     const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
-      throw new Error("Received non-JSON response from the API");
+      throw new Error(`Non-JSON response received from ${url}. Content-Type: ${contentType}`);
     }
 
     const data = await response.json();
+
     return data.results?.[0]?.url || data.url || null;
   } catch (error) {
-    console.error("Error fetching image:", error);
+    console.error("Error fetching image:", error.message, "\nURL:", url);
     await sendMarkdown(ADMIN_CHAT_ID, `Error in Image Gen: ${error.message} \n${url}`);
     return null;
   }
