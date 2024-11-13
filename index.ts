@@ -74,8 +74,34 @@ async function onMessage(message: any): Promise<void | boolean> {
     "Let me give it another shot—could you repeat or add a bit more?",
     "I'm here to listen. Could you reword that for me?"
   ];
+  if (text === "/id") {
+    
+    if (message.reply_to_message) {
+      const repliedMessage = message.reply_to_message;
 
-  if (text === "/pfp" || text === "/animepfp") {
+      if (repliedMessage.sticker) {
+        const stickerId = repliedMessage.sticker.file_id;
+        await sendMarkdown(message.chat.id, `Sticker ID: \`${stickerId}\``);
+      } 
+    
+      else if (repliedMessage.forward_from || repliedMessage.forward_from_chat) {
+        const forwardFromId = repliedMessage.forward_from?.id || repliedMessage.forward_from_chat?.id;
+        const forwardFromType = repliedMessage.forward_from ? "User" : "Channel";
+        await sendMarkdown(message.chat.id, `${forwardFromType} ID: \`${forwardFromId}\``);
+      } 
+      
+      else {
+        await sendMarkdown(message.chat.id, "The replied message is not a sticker or forwarded message.");
+      }
+    } 
+
+    else {
+      const userId = message.from.id;
+      await sendMarkdown(message.chat.id, `Here is your ID - \`${userId}\``);
+    }
+  } 
+
+  else if (text === "/pfp" || text === "/animepfp") {
     await sendImageWithKeyboard(
       message.chat.id,
       "https://telegra.ph/file/00734ac3f3ebfe9cb264f.jpg",
