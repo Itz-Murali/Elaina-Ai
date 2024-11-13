@@ -240,28 +240,39 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
 }
 
 async function fetchImage(url: string): Promise<string | null> {
-  try {
-    const response = await fetch(url, {
-      headers: {
-        'Accept': 'application/json', 
-      },
-    });
+  const maxRetries = 3;
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new Error(`Non-JSON response received from ${url}. Content-Type: ${contentType}`);
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, {
+        headers: { 'Accept': 'application/json' },
+      });
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error(`Non-JSON response received. Content-Type: ${contentType}`);
+      }
+
+      const data = await response.json();
+      return data.results?.[0]?.url || data.url || null;
+
+    } catch (error) {
+      console.error(`Attempt ${attempt} - Error fetching image:`, error.message, "\nURL:", url);
+
+      
+      if (attempt === maxRetries) {
+        await sendMarkdown(ADMIN_CHAT_ID, `Error in Image Gen: ${error.message} \n${url}`);
+        return ERROR_IMAGE_URL; 
+      }
+
+      
+      await delay(1000 * attempt); 
     }
-
-    const data = await response.json();
-
-    return data.results?.[0]?.url || data.url || null;
-  } catch (error) {
-    console.error("Error fetching image:", error.message, "\nURL:", url);
-    await sendMarkdown(ADMIN_CHAT_ID, `Error in Image Gen: ${error.message} \n${url}`);
-    return null;
   }
-}
 
+  return null;
+}
 
 
 function randomChoice(arr: string[]): string {
