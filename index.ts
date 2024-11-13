@@ -93,13 +93,13 @@ async function onMessage(message: any): Promise<void | boolean> {
 
       if (repliedMessage.sticker) {
         const stickerId = repliedMessage.sticker.file_id;
-        await sendMarkdown(message.chat.id, `Sticker ID: \`${stickerId}\``);
+        await sendMarkdown(message.chat.id, `Replied Message Sticker ID: \`${stickerId}\``);
       } 
     
       else if (repliedMessage.forward_from || repliedMessage.forward_from_chat) {
         const forwardFromId = repliedMessage.forward_from?.id || repliedMessage.forward_from_chat?.id;
         const forwardFromType = repliedMessage.forward_from ? "User" : "Channel";
-        await sendMarkdown(message.chat.id, `${forwardFromType} ID: \`${forwardFromId}\``);
+        await sendMarkdown(message.chat.id, `Forwarded ${forwardFromType} ID: \`${forwardFromId}\``);
       } 
       
       else {
@@ -117,7 +117,7 @@ async function onMessage(message: any): Promise<void | boolean> {
     await sendImageWithKeyboard(
       message.chat.id,
       "https://telegra.ph/file/00734ac3f3ebfe9cb264f.jpg",
-      "Welcome To Elaina Pfp Store \nChoose Which Type Pfp You Wanr A Are Free ",
+      "Welcome To Elaina Pfp Store \nChoose Which Type Pfp You Want all Are Free ",
       {
         inline_keyboard: [
           [
