@@ -181,7 +181,6 @@ async function sendStartMessage(chatId: string) {
     await sendMarkdown(ADMIN_CHAT_ID, `Error in sendStartMessage: ${error.message}`);
   }
 }
-
 async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> {
   const { data, message } = callbackQuery;
   if (!message) return;
@@ -191,10 +190,6 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
   let imageUrl: string | null = null;
 
   switch (data) {
-    case "help":
-      const helpText = "*Help Section*\n\nUse /start to begin.\nI'll add more commands here.";             
-      await sendMarkdown(chatId, helpText);
-      break;       
     case "animev1":
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/neko");
       break;
@@ -238,13 +233,11 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
       {
         inline_keyboard: [
           [{ text: "Generate Again", callback_data: data }],
-          
         ]
       }
     );
   }
 }
-
 
 async function fetchImage(url: string): Promise<string | null> {
   try {
@@ -254,15 +247,12 @@ async function fetchImage(url: string): Promise<string | null> {
       },
     });
 
-
     const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
       throw new Error("Received non-JSON response from the API");
     }
 
     const data = await response.json();
-
-   
     return data.results?.[0]?.url || data.url || null;
   } catch (error) {
     console.error("Error fetching image:", error);
@@ -270,6 +260,7 @@ async function fetchImage(url: string): Promise<string | null> {
     return null;
   }
 }
+
 
 
 function randomChoice(arr: string[]): string {
