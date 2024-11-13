@@ -194,13 +194,13 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/neko");
       break;
     case "animev2":
-      imageUrl = await fetchImage("https://nekos.best/api/v2/neko");
+      imageUrl = await fetchBestNekos("https://nekos.best/api/v2/neko");
       break;
     case "animeboyspfp":
-      imageUrl = await fetchImage("https://nekos.best/api/v2/husbando");
+      imageUrl = await fetchBestNekos("https://nekos.best/api/v2/husbando");
       break;
     case "kitsunepfp":
-      imageUrl = await fetchImage("https://nekos.best/api/v2/kitsune");
+      imageUrl = await fetchBestNekos("https://nekos.best/api/v2/kitsune");
       break;
     case "waifupfp":
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/waifu");
