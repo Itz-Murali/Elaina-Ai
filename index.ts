@@ -248,18 +248,29 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
 
 async function fetchImage(url: string): Promise<string | null> {
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+    const response = await fetch(url, {
+      headers: {
+        'Accept': 'application/json', 
+      },
+    });
+
+
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error("Received non-JSON response from the API");
     }
+
     const data = await response.json();
-    return data.results?.[0]?.url || null;
+
+   
+    return data.results?.[0]?.url || data.url || null;
   } catch (error) {
     console.error("Error fetching image:", error);
     await sendMarkdown(ADMIN_CHAT_ID, `Error in Image Gen: ${error.message} \n${url}`);
     return null;
   }
 }
+
 
 function randomChoice(arr: string[]): string {
   return arr[Math.floor(Math.random() * arr.length)];
