@@ -274,6 +274,20 @@ async function fetchImage(url: string): Promise<string | null> {
   return null;
 }
 
+async function fetchBestNekos(url: string): Promise<string> {
+  try {
+    const response = await fetch(url);
+    const data: NekosBestResponse = await response.json();
+    
+    if (data.results.length > 0) {
+      return data.results[0].url;
+    } else {
+      throw new Error('No neko images found');
+    }
+  } catch (error) {
+    throw new Error('Failed to fetch neko images');
+  }
+}
 
 function randomChoice(arr: string[]): string {
   return arr[Math.floor(Math.random() * arr.length)];
