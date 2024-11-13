@@ -88,18 +88,18 @@ async function onMessage(message: any): Promise<void | boolean> {
           ],
           [
             { text: "Neko Anime [V1]", callback_data: "animev1" },
-            { text: "Neko Anime [V2]", callback_data: "animev2" }
+       //     { text: "Neko Anime [V2]", callback_data: "animev2" }
           ],
           [
             
-            { text: "Neko Anime [V3]", callback_data: "nekov3" }
+            { text: "Neko Anime [V2]", callback_data: "nekov3" }
           ],
           [
-            { text: "Husbando", callback_data: "animeboyspfp" },
+        //    { text: "Husbando", callback_data: "animeboyspfp" },
             { text: "Fox Girl", callback_data: "foxgirlz" }
           ],
           [
-            { text: "Kitsune", callback_data: "kitsunepfp" },
+           // { text: "Kitsune", callback_data: "kitsunepfp" },
             { text: "Waifu", callback_data: "waifupfp" }
           ],
           [
@@ -193,15 +193,7 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
     case "animev1":
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/neko");
       break;
-    case "animev2":
-      imageUrl = await fetchBestNekos("https://nekos.best/api/v2/neko");
-      break;
-    case "animeboyspfp":
-      imageUrl = await fetchBestNekos("https://nekos.best/api/v2/husbando");
-      break;
-    case "kitsunepfp":
-      imageUrl = await fetchBestNekos("https://nekos.best/api/v2/kitsune");
-      break;
+
     case "waifupfp":
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/waifu");
       break;
@@ -274,58 +266,13 @@ async function fetchImage(url: string): Promise<string | null> {
   return null;
 }
 
-async function fetchBestNekos(url: string): Promise<string> {
-  try {
-    const response = await fetch(url);
-    const data: NekosBestResponse = await response.json();
-    
-    if (data.results.length > 0) {
-      return data.results[0].url;
-    } else {
-      throw new Error('No neko images found');
-    }
-  } catch (error) {
-    throw new Error('Failed to fetch neko images');
-  }
-}
+
 
 function randomChoice(arr: string[]): string {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
 
-async function editMessageText(chatId: string, messageId: number, text: string, keyboard?: InlineKeyboard) {
-  try {
-    const response = await fetch(apiUrl("editMessageText"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        message_id: messageId,
-        text,
-        parse_mode: "Markdown",
-        reply_markup: keyboard
-      })
-    });
-
-
-    const result = await response.json();
-    if (!result.ok) {
-    
-      await sendMarkdown(
-        ADMIN_CHAT_ID,
-        `*Error Editing Message*\n\n*Chat ID:* ${chatId}\n*Message ID:* ${messageId}\n*Error:* ${result.description}`
-      );
-    }
-  } catch (error) {
-    
-    console.error("Error in editMessageText:", error);
-    await sendMarkdown(
-      ADMIN_CHAT_ID,
-      `*Error Editing Message*\n\n*Chat ID:* ${chatId}\n*Message ID:* ${messageId}\n*Error:* ${error.message}`
-    );
-  }
-}
 
 async function sendImageWithKeyboard(chatId: string, imageUrl: string, caption: string, keyboard: InlineKeyboardMarkup): Promise<void> {
 
