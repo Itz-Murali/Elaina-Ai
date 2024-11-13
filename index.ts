@@ -1,4 +1,4 @@
-import { Zero, MARIN, RANDOMING } from "./images";
+import { Zero, MARIN, RANDOMIMG } from "./images";
 
 const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // Elaina bot token
 const CHAT_ID: string | null = null;
