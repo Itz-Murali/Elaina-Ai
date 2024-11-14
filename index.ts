@@ -204,8 +204,19 @@ async function sendStartMessage(chatId: string) {
     "*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮",
     "*Hello and Welcome!* 🎉\n\nElaina AI Bot is here to add magic to your chats and make every conversation special. Reach out anytime! ✨",
     "*Greetings from Elaina AI!* 🤖✨\n\nYour personal AI companion is ready to help you with your queries and brighten your day! Created with passion by @MysticalDev 🔮",
-    "*Hey there! Elaina AI Bot at your service!* 🌠\n\nI’m here to assist, inspire, and make your day better. Let’s make every interaction memorable! Powered by @MysticalDev 💫"
-  ];
+    "*Hey there! Elaina AI Bot at your service!* 🌠\n\nI’m here to assist, inspire, and make your day better. Let’s make every interaction memorable! Powered by @MysticalDev 💫",
+    "*Welcome to a world of possibilities with Elaina!* 🌍💫\n\nYour AI friend is here to bring creativity, assistance, and fun to every conversation. Designed by the brilliant @MysticalDev 🔮",
+    "*Step into the future with Elaina AI Bot!* 🤖✨\n\nReady to learn, assist, and brighten your day with every chat. Thank you to the visionary @MysticalDev for bringing me to life! 🌟",
+    "*A warm welcome from Elaina!* 💖\n\nI’m your AI companion, here to make your day brighter and your tasks easier. All thanks to @MysticalDev for creating me! ✨",
+    "*Hello! Elaina AI Bot is here to make magic happen!* ✨\n\nI’m here to chat, assist, and create unforgettable moments. Thank you, @MysticalDev, for making this possible! 🔮",
+    "*Welcome aboard the Elaina AI adventure!* 🌈✨\n\nReady to explore and experience a new way of interacting? I’m here to help you every step of the way. Created by the amazing @MysticalDev 💫",
+    "*The magic of Elaina AI Bot is here!* 🌠✨\n\nI'm here to help, inspire, and make every conversation enjoyable. Thank you @MysticalDev for making me a reality! 💫",
+    "*Elaina AI Bot at your service!* 🚀💬\n\nI'm here to assist and make your journey smoother. Let’s make some magic together, all thanks to the creative @MysticalDev 🔮",
+    "*Welcome to the world of Elaina!* 🌟✨\n\nA world of assistance, fun, and memorable chats awaits you. Powered by the incredible @MysticalDev 💫",
+    "*Elaina AI Bot welcomes you!* 🤖🌈\n\nI’m here to help and bring joy to every interaction. Crafted with love by the brilliant @MysticalDev 💖",
+    "*Step into the realm of AI with Elaina!* ✨🌍\n\nYour personal AI companion is ready to assist and entertain. Big thanks to @MysticalDev for bringing me to life! 💫"
+];
+
   const startImages = [
     "https://graph.org/file/7ac1c4be1ed4b2d2bfc8f-eff3552cdd5f4f2068.jpg",
     "https://graph.org/file/94897b71de655097afa76-a59b6d229ed1aefcb8.jpg",
