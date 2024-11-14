@@ -359,12 +359,7 @@ async function sendTyping(chatId: string): Promise<any> {
 
 
 
-async function handleQuoteCommand(chatId: string): Promise<void> {
-  
-  const generatingMessage = await sendMarkdown(chatId, "🌌 Generating an inspirational quote... ✨");
-
-
-  
+async function handleQuoteCommand(chatId: string): Promise<void> {  
   const randomQuote = randomChoice(Quotes);
   await sendMarkdown(chatId, randomQuote);
 }
