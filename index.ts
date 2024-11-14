@@ -225,6 +225,16 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
   let imageUrl: string | null = null;
 
   switch (data) {
+    case "help":
+      const helpText = "*Help Section*\n\nUse /start to begin \n/pfp for pfps.\nI'll add more commands here.";
+      const backButton: InlineKeyboardMarkup = {
+        inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
+      };
+
+      
+      await sendMarkdown(chatId, helpText);
+      }
+      break;
     case "animev1":
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/neko");
       break;
