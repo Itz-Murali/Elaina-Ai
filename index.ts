@@ -9,13 +9,6 @@ const ADMIN_CHAT_ID = "7792739542"; // Admin user ID
 const ERROR_IMAGE_URL = "https://graph.org/file/7844ad60af6ef341bc57e-3d7702ba0a1b96e84d.jpg";
 const START_IMAGE_URL = "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg";
 
-(async function notifyAdminOnStart() {
-  try {
-    await sendMarkdown(ADMIN_CHAT_ID, "Elaina Has Started");
-  } catch (error) {
-    console.error("Error sending startup notification:", error);
-  }
-})();
 
 
 addEventListener("fetch", (event: FetchEvent) => {
