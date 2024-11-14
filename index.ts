@@ -7,7 +7,6 @@ const WEBHOOK = "/endpoint";
 const SECRET = "AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44";
 const ADMIN_CHAT_ID = "7792739542"; // Admin user ID
 const ERROR_IMAGE_URL = "https://graph.org/file/7844ad60af6ef341bc57e-3d7702ba0a1b96e84d.jpg";
-const START_IMAGE_URL = "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg";
 
 
 
@@ -133,8 +132,9 @@ async function onMessage(message: any): Promise<void | boolean> {
   else if (text === "/pfp" || text === "/animepfp") {
     await sendImageWithKeyboard(
       message.chat.id,
+      const welcomeMessage = "
       "https://telegra.ph/file/00734ac3f3ebfe9cb264f.jpg",
-      "Welcome To Elaina Pfp Store \nChoose Which Type Pfp You Want all Are Free ",
+      "Welcome to Elaina's PFP Boutique! 🌸\nExplore our collection and pick the perfect profile picture all at no cost! ✨\nSimply choose your style, and let your personality shines ✨",
       {
         inline_keyboard: [
           [
@@ -209,6 +209,7 @@ async function sendStartMessage(chatId: string) {
   const startImages = [
     "https://graph.org/file/7ac1c4be1ed4b2d2bfc8f-eff3552cdd5f4f2068.jpg",
     "https://graph.org/file/94897b71de655097afa76-a59b6d229ed1aefcb8.jpg",
+    "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg",
     "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg"
   ];
 
