@@ -272,7 +272,7 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
 
   switch (data) {
     case "help":
-      const helpText = "*Help Section*\n\nUse /start to begin \n/pfp for pfps.\n/qoute - for motivation quotes \nI'll add more commands here.";
+      const helpText = "*✨ Elaina's Enchanted Guide ✨*\n\nWelcome, adventurer! 🌌 Ready to explore the wonders of Elaina's magic?\n\nUse /start to begin our journey.\n/pfp for a glimpse of captivating profile pictures.\n/qoute to summon a spark of motivation.\n/id to reveal your unique user ID.\n\n🌠 More spells and secrets will be revealed soon... Stay tuned, dreamer! 🌠";
       const backButton: InlineKeyboardMarkup = {
         inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
       };
@@ -319,7 +319,7 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
       "Generated Image",
       {
         inline_keyboard: [
-          [{ text: "Generate Again", callback_data: data }],
+          [{ text: "ɢᴇɴᴇʀᴀᴛᴇ ᴀɢᴀɪɴ....!", callback_data: data }],
         ]
       }
     );
