@@ -1,5 +1,5 @@
-import { Zero, MARIN, RANDOMIMG } from "./images";
-import { Quotes } from "./images";
+import { Zero, MARIN, RANDOMIMG } from "./resources";
+import { Quotes } from "./resources";
 
 const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // Elaina bot token
 const CHAT_ID: string | null = null;
