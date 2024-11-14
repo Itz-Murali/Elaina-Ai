@@ -218,10 +218,23 @@ async function sendStartMessage(chatId: string) {
 ];
 
   const startImages = [
-    "https://graph.org/file/7ac1c4be1ed4b2d2bfc8f-eff3552cdd5f4f2068.jpg",
-    "https://graph.org/file/94897b71de655097afa76-a59b6d229ed1aefcb8.jpg",
-    "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg",
-    "https://graph.org/file/16d75311155d2afcd5824-4b578a0d4e37e581ed.jpg"
+    "https://ibb.co/c845pJg",
+"https://ibb.co/vc9gQVz",
+"https://ibb.co/hdrc38y",
+"https://ibb.co/0VCMHmr",
+"https://ibb.co/hBpNCzs",
+"https://ibb.co/7KSqM9n",
+"https://ibb.co/VmL001Q",
+"https://ibb.co/gZ1pnnh",
+"https://ibb.co/thpPSbh",
+"https://ibb.co/QmrMjFB",
+"https://ibb.co/7g2YcpQ",
+"https://ibb.co/WfGdyWB",
+"https://ibb.co/JKNVy44",
+"https://ibb.co/0VCMHmr",
+"https://ibb.co/7KSqM9n",
+"https://ibb.co/7g2YcpQ",
+"https://ibb.co/WfGdyWB"
   ];
 
   const randomMessage = startMessages[Math.floor(Math.random() * startMessages.length)];
@@ -230,12 +243,12 @@ async function sendStartMessage(chatId: string) {
   const inlineKeyboard: InlineKeyboard = {
     inline_keyboard: [
       [
-        
-        { text: "Support", url: "https://t.me/Mysticdevs" },
-        { text: "Owner", url: "https://t.me/mysticaldev" }
+          
+        { text: "sᴜᴘᴘᴏʀᴛ", url: "https://t.me/Mysticdevs" },
+        { text: "ᴏᴡɴᴇʀ", url: "https://t.me/mysticaldev" }
       ],
         [
-            { text: "Help", callback_data: "help" }
+            { text: "ʜᴇʟᴘ", callback_data: "help" }
         ]
     ]
   };
@@ -244,7 +257,7 @@ async function sendStartMessage(chatId: string) {
     await sendImageWithKeyboard(chatId, randomImage, randomMessage, inlineKeyboard);
   } catch (error) {
     console.error("Error sending start message:", error);
-    await sendImage(chatId, ERROR_IMAGE_URL, "An error occurred while sending the start message. Please try again later.");
+//    await sendImage(chatId, ERROR_IMAGE_URL, "An error occurred while sending the start message. Please try again later.");
     await sendMarkdown(ADMIN_CHAT_ID, `Error in sendStartMessage: ${error.message}`);
   }
 }
