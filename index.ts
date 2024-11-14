@@ -389,9 +389,7 @@ function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function randomChoice(arr: string[]): string {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
+
 
 
 async function registerWebhook(event: FetchEvent, requestUrl: URL, suffix: string, secret: string): Promise<Response> {
