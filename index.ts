@@ -130,12 +130,10 @@ async function onMessage(message: any): Promise<void | boolean> {
   } 
 
   else if (text === "/pfp" || text === "/animepfp") {
-    await sendImageWithKeyboard(
-    message.chat.id,
-    const welcomeMessage = (
-      "https://telegra.ph/file/00734ac3f3ebfe9cb264f.jpg",
-      "Welcome to Elaina's PFP Boutique! 🌸\nExplore our collection and pick the perfect profile picture all at no cost! ✨\nSimply choose your style, and let your personality shines ✨",
-      {
+    const welcomeMessage = {
+      imageUrl: "https://telegra.ph/file/00734ac3f3ebfe9cb264f.jpg",
+      text: "Welcome to Elaina's PFP Boutique! 🌸\nExplore our collection and pick the perfect profile picture all at no cost! ✨\nSimply choose your style, and let your personality shine ✨",
+      keyboard: {
         inline_keyboard: [
           [
             { text: "Zero Two", callback_data: "zerotwoo" },
@@ -143,18 +141,14 @@ async function onMessage(message: any): Promise<void | boolean> {
           ],
           [
             { text: "Neko Anime [V1]", callback_data: "animev1" },
-       //     { text: "Neko Anime [V2]", callback_data: "animev2" }
           ],
           [
-            
             { text: "Neko Anime [V2]", callback_data: "nekov3" }
           ],
           [
-        //    { text: "Husbando", callback_data: "animeboyspfp" },
             { text: "Fox Girl", callback_data: "foxgirlz" }
           ],
           [
-           // { text: "Kitsune", callback_data: "kitsunepfp" },
             { text: "Waifu", callback_data: "waifupfp" }
           ],
           [
@@ -162,7 +156,8 @@ async function onMessage(message: any): Promise<void | boolean> {
           ]
         ]
       }
-    );
+    };
+    await sendImageWithKeyboard(message.chat.id, welcomeMessage.imageUrl, welcomeMessage.text, welcomeMessage.keyboard); 
   } else if (text === "/start") {
     await notifyAdmin(message);
     await sendStartMessage(message.chat.id);
