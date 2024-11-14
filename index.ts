@@ -357,31 +357,18 @@ async function sendTyping(chatId: string): Promise<any> {
   return fetch(apiUrl("sendChatAction", { chat_id: chatId, action: "typing" })).then(response => response.json());
 }
 
-async function deleteMessage(chatId: string, messageId: number): Promise<void> {
-  await fetch(apiUrl("deleteMessage", { chat_id: chatId, message_id: messageId }), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" }
-  });
-}
+
 
 async function handleQuoteCommand(chatId: string): Promise<void> {
   
   const generatingMessage = await sendMarkdown(chatId, "🌌 Generating an inspirational quote... ✨");
 
 
-  await delay(2000);
-
   
-  await deleteMessage(chatId, generatingMessage.message_id);
-
-
   const randomQuote = randomChoice(Quotes);
   await sendMarkdown(chatId, randomQuote);
 }
 
-function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 
 
