@@ -216,6 +216,7 @@ async function sendStartMessage(chatId: string) {
     await sendMarkdown(ADMIN_CHAT_ID, `Error in sendStartMessage: ${error.message}`);
   }
 }
+
 async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> {
   const { data, message } = callbackQuery;
   if (!message) return;
@@ -231,10 +232,9 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
         inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
       };
 
-      
-      await sendMarkdown(chatId, helpText);
-      }
+      await sendMarkdown(chatId, helpText, backButton);
       break;
+
     case "animev1":
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/neko");
       break;
@@ -242,22 +242,27 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
     case "waifupfp":
       imageUrl = await fetchImage("https://api.waifu.pics/sfw/waifu");
       break;
+
     case "foxgirlz":
       imageUrl = await fetchImage("https://nekos.life/api/v2/img/fox_girl");
       break;
+
     case "nekov3":
       imageUrl = await fetchImage("https://nekos.life/api/v2/img/neko");
       break;
+
     case "zerotwoo":
       imageUrl = randomChoice(Zero);
       break;
+
     case "marinkitagava":
       imageUrl = randomChoice(MARIN);
       break;
+
     case "randomimgs":
       imageUrl = randomChoice(RANDOMIMG);
       break;
-    
+
     default:
       imageUrl = ERROR_IMAGE_URL;
   }
@@ -275,7 +280,6 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
     );
   }
 }
-
 async function fetchImage(url: string): Promise<string | null> {
   const maxRetries = 3;
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
