@@ -103,7 +103,7 @@ async function onMessage(message: any): Promise<void | boolean> {
       await sendMarkdown(message.chat.id, `Here is your ID - \`${userId}\``);
     }
   } 
-  else if (text === "/quotes") {
+  else if (text === "/quotes" || text==="quote") {
     
     await handleQuoteCommand(message.chat.id);
   } 
@@ -225,7 +225,7 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
 
   switch (data) {
     case "help":
-      const helpText = "*Help Section*\n\nUse /start to begin \n/pfp for pfps.\nI'll add more commands here.";
+      const helpText = "*Help Section*\n\nUse /start to begin \n/pfp for pfps.\n/qoute - for motivation quotes \nI'll add more commands here.";
       const backButton: InlineKeyboardMarkup = {
         inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
       };
