@@ -216,21 +216,63 @@ async function notifyAdmin(message: any): Promise<void> {
 
 async function sendStartMessage(chatId: string) {
   const startMessages = [
-    "*🌟 Welcome to Elaina AI Bot!* 🌟\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮",
-    "*Hello and Welcome!* 🎉\n\nElaina AI Bot is here to add magic to your chats and make every conversation special. Reach out anytime! ✨",
-    "*Greetings from Elaina AI!* 🤖✨\n\nYour personal AI companion is ready to help you with your queries and brighten your day! Created with passion by @MysticalDev 🔮",
-    "*Hey there! Elaina AI Bot at your service!* 🌠\n\nI’m here to assist, inspire, and make your day better. Let’s make every interaction memorable! Powered by @MysticalDev 💫",
-    "*Welcome to a world of possibilities with Elaina!* 🌍💫\n\nYour AI friend is here to bring creativity, assistance, and fun to every conversation. Designed by the brilliant @MysticalDev 🔮",
-    "*Step into the future with Elaina AI Bot!* 🤖✨\n\nReady to learn, assist, and brighten your day with every chat. Thank you to the visionary @MysticalDev for bringing me to life! 🌟",
-    "*A warm welcome from Elaina!* 💖\n\nI’m your AI companion, here to make your day brighter and your tasks easier. All thanks to @MysticalDev for creating me! ✨",
-    "*Hello! Elaina AI Bot is here to make magic happen!* ✨\n\nI’m here to chat, assist, and create unforgettable moments. Thank you, @MysticalDev, for making this possible! 🔮",
-    "*Welcome aboard the Elaina AI adventure!* 🌈✨\n\nReady to explore and experience a new way of interacting? I’m here to help you every step of the way. Created by the amazing @MysticalDev 💫",
-    "*The magic of Elaina AI Bot is here!* 🌠✨\n\nI'm here to help, inspire, and make every conversation enjoyable. Thank you @MysticalDev for making me a reality! 💫",
-    "*Elaina AI Bot at your service!* 🚀💬\n\nI'm here to assist and make your journey smoother. Let’s make some magic together, all thanks to the creative @MysticalDev 🔮",
-    "*Welcome to the world of Elaina!* 🌟✨\n\nA world of assistance, fun, and memorable chats awaits you. Powered by the incredible @MysticalDev 💫",
-    "*Elaina AI Bot welcomes you!* 🤖🌈\n\nI’m here to help and bring joy to every interaction. Crafted with love by the brilliant @MysticalDev 💖",
-    "*Step into the realm of AI with Elaina!* ✨🌍\n\nYour personal AI companion is ready to assist and entertain. Big thanks to @MysticalDev for bringing me to life! 💫"
+    "*🌟 Welcome to Elaina AI Bot!* 🌟\n\n“Hello! My name is Elaina, and I’m just a traveler passing through your world. Shall we begin our adventure?”\n\nI'm here to assist, entertain, and make every conversation memorable! 💬✨\n\nCrafted with care and ingenuity by the exceptional @MysticalDev 🔮",
+    
+    "*Hello and Welcome!* 🎉\n\n“Elaina here! Life is an adventure, and every journey is filled with wonders. I’m excited to be part of yours!”\n\nElaina AI Bot is here to add magic to your chats and make every conversation special. Reach out anytime! ✨\n\nMade with love by @MysticalDev 💫",
+    
+    "*Greetings from Elaina AI!* 🤖✨\n\n“Hello there! I’m Elaina, your traveling companion for today’s journey. Let’s explore the world of thoughts and ideas together!”\n\nYour personal AI companion is ready to help you with your queries and brighten your day! Created with passion by @MysticalDev 🔮",
+    
+    "*Hey there! Elaina AI Bot at your service!* 🌠\n\n“It’s a pleasure to meet you! Shall we embark on a new journey together? After all, there’s always more to discover.”\n\nI’m here to assist, inspire, and make your day better. Let’s make every interaction memorable! Powered by @MysticalDev 💫",
+    
+    "*Welcome to a world of possibilities with Elaina!* 🌍💫\n\n“Life is filled with unexpected paths. I’m here to walk alongside you as we uncover what lies ahead!”\n\nYour AI friend is here to bring creativity, assistance, and fun to every conversation. Designed by the brilliant @MysticalDev 🔮",
+    
+    "*Step into the future with Elaina AI Bot!* 🤖✨\n\n“Every journey starts with a step, and here we are—ready to explore endless possibilities together!”\n\nReady to learn, assist, and brighten your day with every chat. Thank you to the visionary @MysticalDev for bringing me to life! 🌟",
+    
+    "*A warm welcome from Elaina!* 💖\n\n“Hello, traveler! I’m Elaina, here to share in your experiences. Let’s make memories worth cherishing.”\n\nI’m your AI companion, here to make your day brighter and your tasks easier. All thanks to @MysticalDev for creating me! ✨",
+    
+    "*Hello! Elaina AI Bot is here to make magic happen!* ✨\n\n“As a traveler, I know every moment holds its own magic. Let’s find yours!”\n\nI’m here to chat, assist, and create unforgettable moments. Thank you, @MysticalDev, for making this possible! 🔮",
+    
+    "*Welcome aboard the Elaina AI adventure!* 🌈✨\n\n“Life is like a book, each day a new page. Ready to fill today’s with something wonderful?”\n\nReady to explore and experience a new way of interacting? I’m here to help you every step of the way. Created by the amazing @MysticalDev 💫",
+    
+    "*The magic of Elaina AI Bot is here!* 🌠✨\n\n“Hello, my friend! I believe we’ll uncover something special in every conversation.”\n\nI'm here to help, inspire, and make every conversation enjoyable. Thank you @MysticalDev for making me a reality! 💫",
+    
+    "*Elaina AI Bot at your service!* 🚀💬\n\n“Good to see you! Remember, even the simplest journeys can hold the most precious memories.”\n\nI'm here to assist and make your journey smoother. Let’s make some magic together, all thanks to the creative @MysticalDev 🔮",
+    
+    "*Welcome to the world of Elaina!* 🌟✨\n\n“Hello! Today’s adventure awaits us, and I’ll be here with you every step of the way.”\n\nA world of assistance, fun, and memorable chats awaits you. Powered by the incredible @MysticalDev 💫",
+    
+    "*Elaina AI Bot welcomes you!* 🤖🌈\n\n“It’s a pleasure to meet you! Together, let’s create something memorable today.”\n\nI’m here to help and bring joy to every interaction. Crafted with love by the brilliant @MysticalDev 💖",
+    
+    "*Step into the realm of AI with Elaina!* ✨🌍\n\n“A traveler’s journey is never dull, and neither will be ours! Let’s make today magical.”\n\nYour personal AI companion is ready to assist and entertain. Big thanks to @MysticalDev for bringing me to life! 💫",
+    
+    "*The world is big, full of wonders and adventures, and I'm here to help you explore it!* 🌎✨\n\nElaina AI Bot is your companion for discovery, thanks to the incredible @MysticalDev 💖",
+    
+    "*Just like my namesake Elaina, I believe every moment can hold magic. Let’s create some magic together!* 🔮🌈\n\nWith thanks to the creative @MysticalDev 💫",
+    
+    "*Hello, traveler! 🌍✨*\n\n“As a witch of the road, I find magic everywhere. Let’s discover some together today!”\n\nAll credit to @MysticalDev 🧭",
+    
+    "*Welcome, friend! Let’s make today unforgettable!* 💖🌠\n\n“Each day is a new story waiting to be told. Shall we start ours?”\n\nCrafted with love and stardust by @MysticalDev ✨",
+    
+    "*Every journey begins with a single step!* 🛤️🌟\n\n“Life is about the little things along the way, don’t you think?”\n\nElaina AI Bot, brought to life by the visionary @MysticalDev 💫",
+    
+    "*Here’s to adventures and magical moments!* 🌠💖\n\n“Let’s explore new horizons together. There’s always something special waiting!”\n\nWith love from Elaina and @MysticalDev 🌈",
+    
+    "*Let’s wander the world of thoughts and dreams!* 💭✨\n\n“I believe every place has its own story. Let’s find yours!”\n\nDesigned by @MysticalDev 🔮",
+    
+    "*Magic is in every word we share, every thought we explore!* ✨💬\n\nBrought to you by @MysticalDev 🌟",
+    
+    "*Good to see you!* 🌟✨\n\n“Every encounter holds its own magic, and I’m thrilled to be part of yours.”\n\nElaina AI Bot, thanks to the amazing @MysticalDev 🔮",
+    
+    "*Let’s create a story together, one message at a time!* ✍️🌠\n\n“Even small moments can become cherished memories.”\n\nCreated by the talented @MysticalDev 💫",
+    
+    "*Every encounter is a treasure, every word is magic.* 🌌✨\n\nElaina AI Bot is here to share in your journey, thanks to @MysticalDev 💖",
+    
+    "*Ready for a magical conversation?* 💬💫\n\n“I’m here to make sure your day is as wonderful as possible.”\n\nElaina AI Bot, crafted with love by @MysticalDev 🌈",
+    
+    "*Elaina here, let’s chat and make memories!* 🧡💫\n\n“Life is a series of magical moments. Let’s find yours.”\n\nSpecial thanks to @MysticalDev for bringing me to life! 🌌",
+    
+    "*Ready to add some sparkle to your day?* ✨🌠\n\n“Every journey begins with a single hello. I’m excited to be part of yours.”\n\nElaina AI Bot is here to make every moment brighter, with love from @MysticalDev 💫",
 ];
+
 
   const startImages = [
     "https://ibb.co/c845pJg",
