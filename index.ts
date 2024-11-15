@@ -5,7 +5,7 @@ const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // Elaina bot to
 const CHAT_ID: string | null = null;
 const WEBHOOK = "/endpoint";
 const SECRET = "AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44";
-const ADMIN_CHAT_ID = "7792739542"; // Admin user ID
+const ADMIN_CHAT_ID = "-1002297624144"; // Admin user ID
 const ERROR_IMAGE_URL = "https://graph.org/file/7844ad60af6ef341bc57e-3d7702ba0a1b96e84d.jpg";
 
 
