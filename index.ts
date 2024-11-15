@@ -9,7 +9,7 @@ const ADMIN_CHAT_ID = "-1002297624144"; // Admin user ID
 const ERROR_IMAGE_URL = "https://graph.org/file/7844ad60af6ef341bc57e-3d7702ba0a1b96e84d.jpg";
 
 
-
+// Test
 addEventListener("fetch", (event: FetchEvent) => {
   const url = new URL(event.request.url);
   if (url.pathname === WEBHOOK) {
