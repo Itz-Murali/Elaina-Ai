@@ -163,25 +163,45 @@ async function onMessage(message: any): Promise<void | boolean> {
     await sendStartMessage(message.chat.id);
   } else {
     await sendTyping(message.chat.id);
+    const maxRetries = 5;
+    let attempt = 0;
+    let success = false;
+
     try {
       const userMessage = encodeURIComponent(text);
-      const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
+      let aiResponse = "";
+
+      while (attempt < maxRetries && !success) {
+         try {
+           const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
       if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
 
       const responseData = await response.json();
-      const aiResponse = responseData.cnt;
-
-      return sendMarkdown(message.chat.id, aiResponse);
+      aiResponse = responseData.cnt;
+      success = true; 
     } catch (error) {
-      console.error("Error fetching AI response:", error);
-      const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
-      await sendMarkdown(message.chat.id, randomResponse);
-      if (ADMIN_CHAT_ID) {
-        await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${error.message}`);
-      }
+      console.error(`Attempt ${attempt + 1} failed:`, error);
+      attempt++;
+      if (attempt >= maxRetries) throw error; 
     }
   }
+
+
+  return sendMarkdown(message.chat.id, aiResponse);
+
+} catch (error) {
+  console.error("Error fetching AI response after multiple attempts:", error);
+  const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
+  await sendMarkdown(message.chat.id, randomResponse);
+
+  if (ADMIN_CHAT_ID) {
+    await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id} after ${maxRetries} attempts: ${error.message}`);
+  }
 }
+
+    }
+  }
+
 
 
 
