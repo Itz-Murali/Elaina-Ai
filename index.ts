@@ -124,8 +124,8 @@ async function onMessage(message: any): Promise<void | boolean> {
       await sendMarkdown(message.chat.id, `Here is your ID - \`${userId}\``);
     }
   } 
-  else if (text === "/quotes" || text==="quote") {
-    
+  else if (text === "/quotes" || text==="/quote") {
+    await sendTyping(message.chat.id);
     await handleQuoteCommand(message.chat.id);
   } 
 
