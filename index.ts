@@ -314,7 +314,7 @@ async function sendStartMessage(chatId: string) {
     await sendImageWithKeyboard(chatId, randomImage, randomMessage, inlineKeyboard);
   } catch (error) {
     console.error("Error sending start message:", error);
-    await sendImage(chatId, ERROR_IMAGE_URL, `An error occurred while sending the start message. Please try again later.\n\n ${error.message}`);
+//    await sendImage(chatId, ERROR_IMAGE_URL, `An error occurred while sending the start message. Please try again later.\n\n ${error.message}`);
     await sendMarkdown(ADMIN_CHAT_ID, `Error in sendStartMessage: ${error.message}`);
   }
 }
