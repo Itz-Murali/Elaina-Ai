@@ -46,7 +46,7 @@ async function onUpdate(update: any): Promise<void> {
   if ("message" in update) {
     const message = update.message;
     if (!message.text) {
-      await sendImage(message.chat.id, ERROR_IMAGE_URL, "I can only respond to text messages.");
+   //   await sendImage(message.chat.id, ERROR_IMAGE_URL, "I can only respond to text messages.");
       return;
     }
     await onMessage(message);
