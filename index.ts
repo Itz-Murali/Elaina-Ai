@@ -464,8 +464,8 @@ async function sendTyping(chatId: string): Promise<any> {
 
 
 async function handleQuoteCommand(chatId: string): Promise<void> {  
-  const randomQuote = randomChoice(Quotes);
-  await sendMarkdown(chatId, randomQuote);
+  const XYZ = randomChoice(Quotes);
+  await sendMarkdown(chatId, XYZ);
 }
 
 
