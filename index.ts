@@ -329,7 +329,7 @@ async function handleCallbackQuery(callbackQuery: CallbackQuery): Promise<void> 
 
   switch (data) {
     case "help":
-      const helpText = "*✨ Elaina's Enchanted Guide ✨*\n\nWelcome, adventurer! 🌌 Ready to explore the wonders of Elaina's magic?\n\nUse /start to begin our journey.\n/pfp for a glimpse of captivating profile pictures.\n/qoute to summon a spark of motivation.\n/id to reveal your unique user ID.\n\n🌠 More spells and secrets will be revealed soon... Stay tuned, dreamer! 🌠";
+      const helpText = "*✨ Elaina's Enchanted Guide ✨*\n\nWelcome, adventurer! 🌌 Ready to explore the wonders of Elaina's magic?\n\nUse /start to begin our journey.\n/pfp for a glimpse of captivating profile pictures.\n/quote to summon a spark of motivation.\n/id to reveal your unique user ID.\n\n🌠 More spells and secrets will be revealed soon... Stay tuned, dreamer! 🌠";
       const backButton: InlineKeyboardMarkup = {
         inline_keyboard: [[{ text: "Back", callback_data: "back" }]]
       };
