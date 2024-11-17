@@ -279,7 +279,7 @@ async function sendStartMessage(chatId: string) {
     
     "*Elaina here, let’s chat and make memories!* 🧡💫\n\n“Life is a series of magical moments. Let’s find yours.”\n\nSpecial thanks to @MysticalDev for bringing me to life! 🌌",
     
-    "*Ready to add some sparkle to your day?* ✨🌠\n\n“Every journey begins with a single hello. I’m excited to be part of yours.”\n\nElaina AI Bot is here to make every moment brighter, with love from @MysticalDev 💫",
+    "*Ready to add some sparkle to your day?* ✨\n\n“Every journey begins with a single hello. I’m excited to be part of yours.”\n\nElaina AI Bot is here to make every moment brighter, with love from @MysticalDev 💫",
 ];
 
 
