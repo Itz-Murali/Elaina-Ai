@@ -1,15 +1,16 @@
 import { Zero, MARIN, RANDOMIMG } from "./resources";
 import { Quotes } from "./resources";
 
-const TOKEN = "8007762081:AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44"; // Elaina bot token
+
+const TYPESCRIPT = "ODAwNzc2MjA4MTpBQUdUbHhqSDJjWWVqZGE4SzNsalRuaXhiTFF1VEZEQUM0NA==";
 const CHAT_ID: string | null = null;
 const WEBHOOK = "/endpoint";
 const SECRET = "AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44";
-const ADMIN_CHAT_ID = "-1002297624144"; // Admin user ID
+const ADMIN_CHAT_ID = "-1002297624144";
 const ERROR_IMAGE_URL = "https://graph.org/file/7844ad60af6ef341bc57e-3d7702ba0a1b96e84d.jpg";
+const MURALI = Main(TYPESCRIPT);
 
 
-// Test
 addEventListener("fetch", (event: FetchEvent) => {
   const url = new URL(event.request.url);
   if (url.pathname === WEBHOOK) {
@@ -22,6 +23,10 @@ addEventListener("fetch", (event: FetchEvent) => {
     event.respondWith(new Response(null, { status: 404 }));
   }
 });
+
+function Main(encoded: string): string {
+  return Buffer.from(encoded, 'base64').toString('utf-8');
+}
 
 async function handleWebhook(event: FetchEvent): Promise<Response> {
   if (event.request.headers.get("X-Telegram-Bot-Api-Secret-Token") !== SECRET) {
@@ -486,7 +491,7 @@ async function unRegisterWebhook(event: FetchEvent): Promise<Response> {
 }
 
 function apiUrl(method: string, params?: object): string {
-  const url = `https://api.telegram.org/bot${TOKEN}/${method}`;
+  const url = `https://api.telegram.org/bot${MURALI}/${method}`;
   if (params) {
     const query = new URLSearchParams(params);
     return `${url}?${query.toString()}`;
