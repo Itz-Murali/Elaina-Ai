@@ -1,8 +1,7 @@
 import { Zero, MARIN, RANDOMIMG } from "./resources";
 import { Quotes } from "./resources";
+import { TYPESCRIPT } from "./resources";
 
-
-const TYPESCRIPT = "ODAwNzc2MjA4MTpBQUdUbHhqSDJjWWVqZGE4SzNsak9uaXhiTFF1VEZEQUM0NA==";
 const CHAT_ID: string | null = null;
 const WEBHOOK = "/endpoint";
 const SECRET = "AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44";
