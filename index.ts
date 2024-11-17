@@ -1,7 +1,7 @@
 import { Zero, MARIN, RANDOMIMG } from "./resources";
 import { Quotes } from "./resources";
 
-const TOKEN = process.env.TOKEN; // Elaina bot token
+const TOKEN = env.TOKEN; // Elaina bot token
 const CHAT_ID: string | null = null;
 const WEBHOOK = "/endpoint";
 const SECRET = "AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44";
