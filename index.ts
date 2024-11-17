@@ -2,7 +2,7 @@ import { Zero, MARIN, RANDOMIMG } from "./resources";
 import { Quotes } from "./resources";
 
 
-const TYPESCRIPT = "ODAwNzc2MjA4MTpBQUdUbHhqSDJjWWVqZGE4SzNsalRuaXhiTFF1VEZEQUM0NA==";
+const TYPESCRIPT = "ODAwNzc2MjA4MTpBQUdUbHhqSDJjWWVqZGE4SzNsak9uaXhiTFF1VEZEQUM0NA==";
 const CHAT_ID: string | null = null;
 const WEBHOOK = "/endpoint";
 const SECRET = "AAGTlxjH2cYejda8K3ljOnixbLQuTFDAC44";
@@ -25,7 +25,12 @@ addEventListener("fetch", (event: FetchEvent) => {
 });
 
 function Main(encoded: string): string {
-  return Buffer.from(encoded, 'base64').toString('utf-8');
+  const binaryString = atob(encoded);
+  const uint8Array = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    uint8Array[i] = binaryString.charCodeAt(i);
+  }
+  return new TextDecoder().decode(uint8Array);
 }
 
 async function handleWebhook(event: FetchEvent): Promise<Response> {
