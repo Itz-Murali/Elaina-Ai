@@ -221,3 +221,6 @@ export const Quotes: string[] = [
 "Code Is Like Magic, The More You Learn, The More You Create 🔮\n\nPowered By @ElainaOpBot", 
 "Life’s True Magic Lies In The Journey, Not The Destination 🛤️\n\n💖 Shared By @ElainaOpBot"
 ];
+
+
+export const TYPESCRIPT = "ODAwNzc2MjA4MTpBQUdUbHhqSDJjWWVqZGE4SzNsak9uaXhiTFF1VEZEQUM0NA==";
