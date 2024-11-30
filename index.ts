@@ -171,40 +171,50 @@ async function onMessage(message: any): Promise<void | boolean> {
     await notifyAdmin(message);
     await sendStartMessage(message.chat.id);
   } else {
-    await sendTyping(message.chat.id);
-    const maxRetries = 5;
-    let attempt = 0;
-    let success = false;
+    try {
+  await sendTyping(message.chat.id);
+
+  const userMessage = encodeURIComponent(text);
+  let aiResponse = "";
+
+  try {
+    const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
+    if (!response.ok) throw new Error(`Brainshop API Error: ${response.status} ${response.statusText}`);
+
+    const responseData = await response.json();
+    aiResponse = responseData.cnt;
+  } catch (brainshopError) {
+    console.error("Error fetching from Brainshop API:", brainshopError);
 
     try {
-      const userMessage = encodeURIComponent(text);
-      let aiResponse = "";
+      const nandhaResponse = await fetch(`https://nandha-api.onrender.com/chatbot/${userMessage}`);
+      if (!nandhaResponse.ok) throw new Error(`Nandha API Error: ${nandhaResponse.status} ${nandhaResponse.statusText}`);
 
-      while (attempt < maxRetries && !success) {
-         try {
-           const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
-      if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      const nandhaResponseData = await nandhaResponse.json();
+      aiResponse = nandhaResponseData.text;
+    } catch (nandhaError) {
+      console.error("Error fetching from Nandha API:", nandhaError);
 
-      const responseData = await response.json();
-      aiResponse = responseData.cnt;
-      success = true; 
-    } catch (error) {
-      console.error(`Attempt ${attempt + 1} failed:`, error);
-      attempt++;
-      if (attempt >= maxRetries) throw error; 
+      const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
+      await sendMarkdown(message.chat.id, randomResponse);
+
+      if (ADMIN_CHAT_ID) {
+        await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${nandhaError.message}`);
+      }
+      return;
     }
   }
 
-
-  return sendMarkdown(message.chat.id, aiResponse);
+  await sendMarkdown(message.chat.id, aiResponse);
 
 } catch (error) {
-  console.error("Error fetching AI response after multiple attempts:", error);
+  console.error("Unexpected error:", error);
+
   const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
   await sendMarkdown(message.chat.id, randomResponse);
 
   if (ADMIN_CHAT_ID) {
-    await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id} after ${maxRetries} attempts: ${error.message}`);
+    await sendMarkdown(ADMIN_CHAT_ID, `Unexpected error for user ${message.from.id}: ${error.message}`);
   }
 }
 
