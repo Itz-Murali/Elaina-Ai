@@ -223,4 +223,5 @@ export const Quotes: string[] = [
 ];
 
 
-export const TYPESCRIPT = "ODAwNzc2MjA4MTpBQUdUbHhqSDJjWWVqZGE4SzNsak9uaXhiTFF1VEZEQUM0NA==";
+
+export const TYPESCRIPT = "NzM3OTc1NTc1MTpBQUZZeVl0dkRBVUVRUzZvcnFILThuVksydGhQWU5xM1BsNA==";
