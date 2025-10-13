@@ -11,6 +11,11 @@ const MURALI = Main(TYPESCRIPT);
 
 // hello 
 
+interface AiApiResponse {
+  answer?: string;
+}
+
+
 addEventListener("fetch", (event: FetchEvent) => {
   const url = new URL(event.request.url);
   if (url.pathname === WEBHOOK) {
@@ -173,16 +178,11 @@ async function onMessage(message: any): Promise<void | boolean> {
     await sendStartMessage(message.chat.id);
   } else {
     try {
-  await sendTyping(message.chat.id);
-
-  const userMessage = encodeURIComponent(text);
-
-
-      interface AiApiResponse {
-  answer?: string;
-}
-
-const response = await fetch(
+      await sendTyping(message.chat.id);
+      const userMessage = encodeURIComponent(text);
+      const USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
+      const response = await fetch(
   `https://elaina-ai-api.itz-murali.workers.dev/?user_message=${encodeURIComponent(userMessage)}`,
   {
     method: "GET",
@@ -190,19 +190,24 @@ const response = await fetch(
       "Content-Type": "application/json",
       "Accept": "application/json",
       "Cache-Control": "no-cache",
-      "X-Requested-With": "ElainaClient", 
+      "X-Requested-With": "ElainaClient",
+      "User-Agent": USER_AGENT, 
     },
   }
 );
 
-if (response.ok) {
-  const responseData: AiApiResponse = await response.json();
-  if (responseData.answer) {
-    await sendMarkdown(message.chat.id, responseData.answer);
+
+      if (response.ok) {
+        const responseData: AiApiResponse = await response.json();
+        if (responseData.answer) {
+          await sendMarkdown(message.chat.id, responseData.answer);
   }
-} else {
-  console.error("API request failed:", response.statusText);
-           }
+} 
+        else {
+          console.error("API request failed:", response.statusText);
+}
+
+
 
 } catch (error) {
   console.error("Unexpected error:", error);
