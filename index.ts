@@ -176,37 +176,18 @@ async function onMessage(message: any): Promise<void | boolean> {
   await sendTyping(message.chat.id);
 
   const userMessage = encodeURIComponent(text);
-  let aiResponse = "";
 
-  try {
-    const response = await fetch(`https://elaina-ai-api.itz-murali.workers.dev/?user_message=${userMessage}`);
-    if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
-
-    const responseData = await response.json();
-    aiResponse = responseData.answer;
-  } catch (brainshopError) {
-    console.error("Error fetching from Brainshop API:", brainshopError);
-
-    try {
-      const nandhaResponse = await fetch(`https://nandha-api.onrender.com/chatbot/${userMessage}`);
-      if (!nandhaResponse.ok) throw new Error(`Nandha API Error: ${nandhaResponse.status} ${nandhaResponse.statusText}`);
-
-      const nandhaResponseData = await nandhaResponse.json();
-      aiResponse = nandhaResponseData.text;
-    } catch (nandhaError) {
-      console.error("Error fetching from Nandha API:", nandhaError);
-
-      const randomResponse = friendlyResponses[Math.floor(Math.random() * friendlyResponses.length)];
-      await sendMarkdown(message.chat.id, randomResponse);
-
-      if (ADMIN_CHAT_ID) {
-        await sendMarkdown(ADMIN_CHAT_ID, `Error for user ${message.from.id}: ${nandhaError.message}`);
-      }
-      return;
-    }
+      interface AiApiResponse {
+        answer?: string;
+}
+      
+      const response = await fetch(`https://elaina-ai-api.itz-murali.workers.dev/?user_message=${encodeURIComponent(userMessage)}`);
+      if (response.ok) {
+        const responseData: AiApiResponse = await response.json();
+        if (responseData.answer) {
+          await sendMarkdown(message.chat.id, responseData.answer);
   }
-
-  await sendMarkdown(message.chat.id, aiResponse);
+}
 
 } catch (error) {
   console.error("Unexpected error:", error);
