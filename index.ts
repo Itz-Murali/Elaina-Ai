@@ -179,11 +179,11 @@ async function onMessage(message: any): Promise<void | boolean> {
   let aiResponse = "";
 
   try {
-    const response = await fetch(`http://api.brainshop.ai/get?bid=181999&key=BTx5oIaCq8Cqut3S&uid=${message.chat.id}&msg=${userMessage}`);
-    if (!response.ok) throw new Error(`Brainshop API Error: ${response.status} ${response.statusText}`);
+    const response = await fetch(`https://elaina-ai-api.itz-murali.workers.dev/?user_message=${userMessage}`);
+    if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
 
     const responseData = await response.json();
-    aiResponse = responseData.cnt;
+    aiResponse = responseData.answer;
   } catch (brainshopError) {
     console.error("Error fetching from Brainshop API:", brainshopError);
 
