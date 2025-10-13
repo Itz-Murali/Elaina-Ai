@@ -177,17 +177,32 @@ async function onMessage(message: any): Promise<void | boolean> {
 
   const userMessage = encodeURIComponent(text);
 
+
       interface AiApiResponse {
-        answer?: string;
+  answer?: string;
 }
-      
-      const response = await fetch(`https://elaina-ai-api.itz-murali.workers.dev/?user_message=${encodeURIComponent(userMessage)}`);
-      if (response.ok) {
-        const responseData: AiApiResponse = await response.json();
-        if (responseData.answer) {
-          await sendMarkdown(message.chat.id, responseData.answer);
+
+const response = await fetch(
+  `https://elaina-ai-api.itz-murali.workers.dev/?user_message=${encodeURIComponent(userMessage)}`,
+  {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Cache-Control": "no-cache",
+      "X-Requested-With": "ElainaClient", 
+    },
   }
-}
+);
+
+if (response.ok) {
+  const responseData: AiApiResponse = await response.json();
+  if (responseData.answer) {
+    await sendMarkdown(message.chat.id, responseData.answer);
+  }
+} else {
+  console.error("API request failed:", response.statusText);
+           }
 
 } catch (error) {
   console.error("Unexpected error:", error);
