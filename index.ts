@@ -183,28 +183,37 @@ async function onMessage(message: any): Promise<void | boolean> {
       const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
       const response = await fetch(
-  `https://elaina-ai-api.itz-murali.workers.dev/?user_message=${encodeURIComponent(userMessage)}`,
+  `https://elaina-ai-api.itz-murali.workers.dev/?user_message=${encodeURIComponent(text)}`,
   {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
       "Accept": "application/json",
       "Cache-Control": "no-cache",
       "X-Requested-With": "ElainaClient",
-      "User-Agent": USER_AGENT, 
+      "User-Agent": "Mozilla/5.0 (compatible; ElainaBot/1.0; +https://t.me/mysticaldev)"
     },
+    cf: { cacheTtl: 0, cacheEverything: false },
   }
 );
 
 
-      if (response.ok) {
-        const responseData: AiApiResponse = await response.json();
-        if (responseData.answer) {
-          await sendMarkdown(message.chat.id, responseData.answer);
+      let bodyText;
+try {
+  bodyText = await response.text();
+} catch (err) {
+  bodyText = "Failed to read body";
+}
+console.log("API response status:", response.status, response.statusText, "Body:", bodyText);
+
+if (response.ok) {
+  const responseData: AiApiResponse = JSON.parse(bodyText);
+  if (responseData.answer) {
+    await sendMarkdown(message.chat.id, responseData.answer);
+  } else {
+    console.error("No 'answer' field in API:", bodyText);
   }
-} 
-        else {
-          console.error("API request failed:", response.statusText);
+} else {
+  await sendMarkdown(message.chat.id, `⚠️ API Error: ${response.statusText}`);
 }
 
 
