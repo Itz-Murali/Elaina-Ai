@@ -182,7 +182,7 @@ async function onMessage(message: any): Promise<void | boolean> {
       const userMessage = encodeURIComponent(text);
       
 const response = await fetch(
-  `https://murali-elainaapi.vercel.app/?user_message=${encodeURIComponent(text)}`,
+  `https://chiku-bots.vercel.app/elaina?user_message=${encodeURIComponent(text)}`,
   {
     method: "GET",
   }
